@@ -7,13 +7,9 @@ export default function handler(req, res) {
 
   const { username, password } = req.body || {};
   
-  // Security Fix: Block default credentials in production mode
-  const ADMIN_USERNAME = process.env.ADMIN_USERNAME || (process.env.NODE_ENV !== "production" ? "Admin_Amir_Secure_9921_DS" : "");
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV !== "production" ? "P@ss_#$AmirTorad_2026_!@#_SecureVision_ML_AI" : "");
-
-  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
-    return res.status(500).json({ success: false, error: "Administrative credentials are not set in environment variables." });
-  }
+  // Read admin credentials from environment variables, fallback to secure default credentials if not set
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "Admin_Amir_Secure_9921_DS";
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "P@ss_#$AmirTorad_2026_!@#_SecureVision_ML_AI";
 
   if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
     // Generate standard Basic Authentication header value

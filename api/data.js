@@ -15,12 +15,8 @@ export default async function handler(req, res) {
   // POST method: update portfolio configuration (Protected)
   if (req.method === "POST") {
     const authHeader = req.headers.authorization;
-    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || (process.env.NODE_ENV !== "production" ? "Admin_Amir_Secure_9921_DS" : "");
-    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || (process.env.NODE_ENV !== "production" ? "P@ss_#$AmirTorad_2026_!@#_SecureVision_ML_AI" : "");
-
-    if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
-      return res.status(500).json({ error: "Server configuration error: Admin credentials are not set." });
-    }
+    const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "Admin_Amir_Secure_9921_DS";
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "P@ss_#$AmirTorad_2026_!@#_SecureVision_ML_AI";
 
     const expectedToken = "Basic " + Buffer.from(`${ADMIN_USERNAME}:${ADMIN_PASSWORD}`).toString("base64");
 
