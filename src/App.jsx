@@ -43,27 +43,6 @@ export default function App() {
         const response = await fetch("/api/data");
         if (response.ok) {
           const result = await response.json();
-          
-          // Protect custom local cache from being overwritten by uninitialized server defaults
-          const localSaved = localStorage.getItem("portfolio_data");
-          if (localSaved) {
-            try {
-              const localParsed = JSON.parse(localSaved);
-              
-              // If server returns default baseline certifications, but local storage has modified ones, preserve local edits
-              const isServerDefault = JSON.stringify(result.certifications) === JSON.stringify(defaultData.certifications);
-              const isLocalCustom = JSON.stringify(localParsed.certifications) !== JSON.stringify(defaultData.certifications);
-              
-              if (isServerDefault && isLocalCustom) {
-                console.log("Detected custom local edits. Preserving local cache to prevent data loss.");
-                setData(localParsed);
-                return;
-              }
-            } catch (cacheErr) {
-              console.error("Error parsing local cache during sync check:", cacheErr);
-            }
-          }
-
           setData(result);
           localStorage.setItem("portfolio_data", JSON.stringify(result));
         }
@@ -118,7 +97,7 @@ export default function App() {
             100% { transform: rotate(360deg); }
           }
         `}</style>
-        <div style={{ fontFamily: "'Fira Code', monospace", fontSize: "0.8rem", letterSpacing: "0.2em", color: "#d946ef" }}>
+        <div style={{ fontFamily: "'Fira Code', monospace", fontSize: "0.8rem", letterSpacing: "0.2em", color: "#00f2fe" }}>
           &gt; CONNECTING TO SERVERLESS DATABASE...
         </div>
       </div>
